@@ -19,24 +19,52 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import android.app.Activity;
-import android.location.LocationManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 
 public class MainActivity extends Activity 
 {	
+	
 	ArrayList<Stop> locations = new ArrayList<Stop>();
 	String closestStopLocation;
 	String closestStopTime;
+	
+	Intent intent = new Intent(this, MapHolderActivity.class);
+	
+	private static final String TAG =  "Transition"; 
+	
+	private View.OnClickListener onClick = new View.OnClickListener() 
+	{	
+		public void onClick(View v) 
+		{
+			Log.d(TAG, String.valueOf((char)v.getId()));
+			try {
+				getClosestStop(String.valueOf(R.id.time_input), String.valueOf(R.id.LocationInput));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			intent.putExtra("Location", closestStopLocation);
+			intent.putExtra("Time", closestStopTime);
+			startActivity(intent);
+		}
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		main();
 	}
 
 	@Override
@@ -47,13 +75,23 @@ public class MainActivity extends Activity
 		return true;
 	}
 	
-	public void main(String[] args) 
+	public void main() 
 	{
 		//This sets up the auto-completing text box in the xml
 		AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.autocomplete_location);
 		String[] stops = getResources().getStringArray(R.array.locations_array);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stops);
 		textView.setAdapter(adapter);
+		
+		//This sets up the Layout and the Button which will take the user to GoogleMaps
+		LinearLayout question = (LinearLayout) this.findViewById(R.id.TimeInput);
+		
+		Button button = new Button(this.getApplicationContext());
+		button.setText("Enter");
+		button.setId(9);
+		button.setOnClickListener(onClick);
+		question.addView(button);
+		
 		
 		//this loads the JSON data from the database
 		try {

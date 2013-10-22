@@ -29,10 +29,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAQCZ1yfU58-eMO1T9lijteOYgA1JD--Zc" />
-        
         <activity
             android:name="com.example.androidbusfinder.MainActivity"
             android:label="@string/app_name" >
@@ -42,6 +38,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.example.androidbusfinder.MapHolderActivity"
+            android:label="@string/app_name" 
+            android:parentActivityName="com.example.myfirstapp.MainActivity" >
+	        <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="com.example.myfirstapp.MainActivity" />
+        </activity>
+        
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAQCZ1yfU58-eMO1T9lijteOYgA1JD--Zc" />
     </application>
 
 </manifest>
