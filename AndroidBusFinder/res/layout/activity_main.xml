@@ -36,11 +36,6 @@
 		    android:hint="@string/time_hint"
 		    android:inputType="number"
 		    android:imeOptions="actionSend" />
-	    <Button
-	        android:id="@id/enter"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="@string/button_send" />
     </LinearLayout>
     
 </LinearLayout>

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -113,9 +112,9 @@ public class MainActivity extends Activity
 	{
 		//These variables let me parse the time strings into variables that I can do math on
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss", Locale.US);
-		Calendar tempCurrentStopTime = null;
-		Calendar tempLowestStopTime = null;
-		Calendar inputTime = null;
+		Calendar tempCurrentStopTime = Calendar.getInstance(Locale.US);
+		Calendar tempLowestStopTime = Calendar.getInstance(Locale.US);
+		Calendar inputTime = Calendar.getInstance(Locale.US);
 		
 		Date tempTime = sdf.parse("00:00:00");
 		tempLowestStopTime.setTime(tempTime);
