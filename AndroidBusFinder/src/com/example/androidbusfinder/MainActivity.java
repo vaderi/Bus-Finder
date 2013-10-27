@@ -31,7 +31,6 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends Activity 
 {	
-	
 	ArrayList<Stop> locations = new ArrayList<Stop>();
 	String closestStopLocation;
 	String closestStopTime;
