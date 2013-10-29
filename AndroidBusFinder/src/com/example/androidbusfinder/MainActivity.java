@@ -33,9 +33,9 @@ public class MainActivity extends Activity
 {	
 	ArrayList<Stop> locations = new ArrayList<Stop>();
 	String closestStopLocation;
-	String closestStopTime;
+	String closestStopTime; 
 	
-	Intent intent = new Intent(this, MapHolderActivity.class);
+	Intent intent;
 	
 	private static final String TAG =  "Transition"; 
 	
@@ -62,6 +62,8 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		intent = new Intent(this, MapHolderActivity.class);
+		
 		main();
 	}
 
@@ -86,12 +88,12 @@ public class MainActivity extends Activity
 		
 		Button button = new Button(this.getApplicationContext());
 		button.setText("Enter");
-		button.setId(9);
+		button.setId('E');
 		button.setOnClickListener(onClick);
 		question.addView(button);
 		
 		
-		//this loads the JSON data from the database
+		/*//this loads the JSON data from the database
 		try {
 			getData();
 		} catch (ParseException e) {
@@ -103,7 +105,7 @@ public class MainActivity extends Activity
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	//This calculates the earliest bus going to the destination
@@ -166,34 +168,34 @@ public class MainActivity extends Activity
 	    return null;
 	}
 	
-	public void getData() throws ParseException, JSONException, IOException
-	{
-		URL url = new URL("http://www.dumud.net/~slane/vasily/?data=true");
-		
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection(); 
-		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream())); 
-		StringBuilder jsonBuilder = new StringBuilder(); 
-		String line;
-		String json;
-		
-		while((line = rd.readLine()) != null) 
-		{
-			jsonBuilder.append(line); 
-			json = jsonBuilder.toString(); 
-			
-			JSONObject jsonObj = new JSONObject(json); 
-			JSONArray jsonLocations = jsonObj.getJSONArray("champlain");
-			
-			for (int i = 0; i < jsonLocations.length(); ++i) 
-			{
-				JSONObject location = jsonLocations.getJSONObject(i); 
-				int id = location.getInt("stop_id"); 
-				String stop = location.getString("stop_name"); 
-				String time = location.getString("stop_location"); 
-				String days = location.getString("stop_days"); 
-				
-				locations.add( new Stop(id, stop, time, days, new String[]{}) ); 
-			}
-		}
-	}
+//	public void getData() throws ParseException, JSONException, IOException
+//	{
+//		URL url = new URL("http://www.dumud.net/~slane/vasily/?data=true");
+//		
+//		HttpURLConnection conn = (HttpURLConnection) url.openConnection(); 
+//		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream())); 
+//		StringBuilder jsonBuilder = new StringBuilder(); 
+//		String line;
+//		String json;
+//		
+//		while((line = rd.readLine()) != null) 
+//		{
+//			jsonBuilder.append(line); 
+//			json = jsonBuilder.toString(); 
+//			
+//			JSONObject jsonObj = new JSONObject(json); 
+//			JSONArray jsonLocations = jsonObj.getJSONArray("champlain");
+//			
+//			for (int i = 0; i < jsonLocations.length(); ++i) 
+//			{
+//				JSONObject location = jsonLocations.getJSONObject(i); 
+//				int id = location.getInt("stop_id"); 
+//				String stop = location.getString("stop_name"); 
+//				String time = location.getString("stop_location"); 
+//				String days = location.getString("stop_days"); 
+//				
+//				locations.add( new Stop(id, stop, time, days, new String[]{}) ); 
+//			}
+//		}
+//	}
 }
