@@ -134,6 +134,10 @@ public class MainActivity extends Activity
 				}
 			}
 		}
+		if( newDestination.time == "" )
+		{
+			newDestination.time = "There is no Bus that will get you there by that time.";
+		}
 	}
 	
 	
