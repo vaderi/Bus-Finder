@@ -19,21 +19,22 @@ public class AsyncDataGrab extends AsyncTask<URL, Integer, ArrayList<Stop>>
 	@Override
 	protected ArrayList<Stop> doInBackground(URL... params) 
 	{
-		ArrayList<Stop> locations = new ArrayList<Stop>();
-		
 		URL url;
 		HttpURLConnection conn;
 		BufferedReader rd;
 		
-		StringBuilder jsonBuilder = new StringBuilder();
+		StringBuilder jsonBuilder;
 		String line;
 		String json;
+		
+		ArrayList<Stop> locations = new ArrayList<Stop>();
 		
 		try 
 		{
 			url = new URL("http://www.dumud.net/~slane/vasily/?data=true");
 			conn = (HttpURLConnection) url.openConnection();
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			jsonBuilder = new StringBuilder();
 			
 			while((line = rd.readLine()) != null) 
 			{
@@ -43,14 +44,14 @@ public class AsyncDataGrab extends AsyncTask<URL, Integer, ArrayList<Stop>>
 				JSONObject jsonObj = new JSONObject(json); 
 				JSONArray jsonLocations = jsonObj.getJSONArray("champlain");
 				
-				for (int i = 0; i < jsonLocations.length(); ++i) 
+				for (int i = 0; i < jsonLocations.length()-1; ++i) 
 				{
 					JSONObject location = jsonLocations.getJSONObject(i); 
 					
-					int id = location.getInt("stop_id"); 
-					String stop = location.getString("stop_name"); 
-					String time = location.getString("stop_location"); 
-					String days = location.getString("stop_days"); 
+					int id = location.getInt("id"); 
+					String stop = location.getString("location"); 
+					String time = location.getString("time"); 
+					String days = location.getString("days"); 
 					
 					locations.add( new Stop(id, stop, time, days, new String[]{}) ); 
 				}

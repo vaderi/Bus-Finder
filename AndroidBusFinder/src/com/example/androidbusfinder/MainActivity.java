@@ -129,6 +129,7 @@ public class MainActivity extends Activity
 						tempCurrentStopTime.getTimeInMillis() - inputTime.getTimeInMillis() < 0 )
 				{
 					newDestination.location = locations.get(i - 1).stopName;
+					System.out.printf(locations.get(i).stopName);
 					tempLowestStopTime.setTime(sdf.parse(locations.get(i - 1).stopTime));
 					newDestination.time = "" + locations.get(i - 1).stopTime;
 				}

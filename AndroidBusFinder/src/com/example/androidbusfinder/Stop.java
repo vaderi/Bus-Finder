@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Date;
 
 public class Stop 
 {
@@ -30,7 +31,7 @@ public class Stop
 			daysActive = daysActive.replaceAll(",", " ");
 		}
 		
-		java.util.Date tempStopTime;
+		Date tempStopTime = new Date();
 		tempStopTime = sdf.parse("13:00:00");
 		tempComparisonTime.setTime(tempStopTime);
 		tempStopTime = sdf.parse("01:00:00");
