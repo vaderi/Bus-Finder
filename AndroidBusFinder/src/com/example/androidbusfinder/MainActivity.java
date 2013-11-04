@@ -24,8 +24,7 @@ import android.widget.LinearLayout;
 public class MainActivity extends Activity 
 {	
 	ArrayList<Stop> locations = new ArrayList<Stop>();
-	String closestStopLocation="weee";
-	String closestStopTime="hi"; 
+	Destination closestDestination;
 	
 	Intent intent;
 	
@@ -36,16 +35,18 @@ public class MainActivity extends Activity
 		public void onClick(View v) 
 		{
 			Log.d(TAG, String.valueOf((char)v.getId()));
-			//this is fucking up
-//			try {
-//				getClosestStop(String.valueOf(R.id.time_input), String.valueOf(R.id.LocationInput));
-//			} catch (ParseException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 			
-			intent.putExtra("Location", closestStopLocation);
-			intent.putExtra("Time", closestStopTime);
+			try 
+			{
+				closestDestination = new Destination(String.valueOf(R.id.time_input), String.valueOf(R.id.LocationInput));
+				getClosestStop( closestDestination );
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			intent.putExtra("Location", closestDestination.location);
+			intent.putExtra("Time", closestDestination.time);
 			startActivity(intent);
 		}
 	};
@@ -90,20 +91,23 @@ public class MainActivity extends Activity
 		//this loads the JSON data from the database
 		try {
 			getData();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		} catch (ParseException e) 
+		{
+			System.out.printf("Failed to load Data");
 			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+		} catch (JSONException e) 
+		{
+			System.out.printf("Failed to load Data");
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e)
+		{
+			System.out.printf("Failed to load Data");
 			e.printStackTrace();
 		}
 	}
 	
 	//This calculates the earliest bus going to the destination
-	public void getClosestStop( String destination, String time ) throws ParseException
+	public void getClosestStop( Destination newDestination ) throws ParseException
 	{
 		//These variables let me parse the time strings into variables that I can do math on
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss", Locale.US);
@@ -113,56 +117,30 @@ public class MainActivity extends Activity
 		
 		Date tempTime = sdf.parse("00:00:00");
 		tempLowestStopTime.setTime(tempTime);
-		inputTime.setTime(sdf.parse(time));
+		inputTime.setTime(sdf.parse(newDestination.time));
 		
-		for( int i = 0; i < locations.size(); ++i )
+		//In the Full version this should be corrected, it will do for now
+		for( int i = 1; i < locations.size(); ++i )
 		{
-			if( locations.get(i).stopName == destination )
+			if( locations.get(i).stopName == newDestination.location )
 			{
 				tempCurrentStopTime.setTime((sdf.parse(locations.get(i - 1).stopTime)));
 				if( 	tempCurrentStopTime.getTimeInMillis() - tempLowestStopTime.getTimeInMillis() > 0 &&  
 						tempCurrentStopTime.getTimeInMillis() - inputTime.getTimeInMillis() < 0 )
 				{
-					closestStopLocation = locations.get(i - 1).stopName;
+					newDestination.location = locations.get(i - 1).stopName;
 					tempLowestStopTime.setTime(sdf.parse(locations.get(i - 1).stopTime));
-					closestStopTime = "" + locations.get(i - 1).stopTime;
+					newDestination.time = "" + locations.get(i - 1).stopTime;
 				}
 			}
 		}
-		
-		//setNodeValue( "bus_stop_name", closestStopLocation, nodes );
 	}
+	
+	
 	
 	public void getData() throws ParseException, JSONException, IOException
 	{
 		URL url1 = null;
 		new AsyncDataGrab().execute(url1);
-//		URL url = new URL("http://www.dumud.net/~slane/vasily/?data=true");
-//		
-//		HttpURLConnection conn = (HttpURLConnection) url.openConnection(); 
-//		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream())); 
-//		StringBuilder jsonBuilder = new StringBuilder(); 
-//		String line;
-//		String json;
-//		
-//		while((line = rd.readLine()) != null) 
-//		{
-//			jsonBuilder.append(line); 
-//			json = jsonBuilder.toString(); 
-//			
-//			JSONObject jsonObj = new JSONObject(json); 
-//			JSONArray jsonLocations = jsonObj.getJSONArray("champlain");
-//			
-//			for (int i = 0; i < jsonLocations.length(); ++i) 
-//			{
-//				JSONObject location = jsonLocations.getJSONObject(i); 
-//				int id = location.getInt("stop_id"); 
-//				String stop = location.getString("stop_name"); 
-//				String time = location.getString("stop_location"); 
-//				String days = location.getString("stop_days"); 
-//				
-//				locations.add( new Stop(id, stop, time, days, new String[]{}) ); 
-//			}
-//		}
 	}
 }

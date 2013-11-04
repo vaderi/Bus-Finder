@@ -58,14 +58,17 @@ public class AsyncDataGrab extends AsyncTask<URL, Integer, ArrayList<Stop>>
 		} 
 		catch (IOException e) 
 		{
+			System.out.printf("Failed to create a Stop");
 			e.printStackTrace();
 		} 
 		catch (JSONException e) 
 		{
+			System.out.printf("Failed to create a Stop");
 			e.printStackTrace();
 		} 
 		catch (ParseException e) 
 		{
+			System.out.printf("Failed to create a Stop");
 			e.printStackTrace();
 		}
 		

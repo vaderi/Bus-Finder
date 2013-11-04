@@ -13,5 +13,7 @@
     	<item>Spinner Place</item>
     	<item>Quarry</item>
     </string-array>
+    <string name="stop_name">there</string>
+    <string name="stop_time">hi</string>
     
 </resources>

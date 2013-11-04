@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.MarkerOptions;*/
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 
 public class MapHolderActivity extends Activity
@@ -17,6 +18,7 @@ public class MapHolderActivity extends Activity
 	static final LatLng SPINNER = new LatLng( 0, 0 );
 	static final LatLng QUARRY = new LatLng( 0, 0 );
 	private GoogleMap map;*/
+	
 	
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -28,8 +30,16 @@ public class MapHolderActivity extends Activity
         String location = intent.getStringExtra("Location");
         String time = intent.getStringExtra("Time");
         
-        System.out.printf(location);
-        System.out.printf(time);
+        //System.out.printf(location);
+        //System.out.printf(time);
+        
+        //final TextView locationView = new TextView(this.getApplicationContext());
+        
+        
+        final TextView locationView = (TextView) findViewById(R.id.StopName);
+        locationView.setText(location);
+        final TextView timeView = (TextView) findViewById(R.id.StopTime);
+        timeView.setText(time);
         
         /*map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         
