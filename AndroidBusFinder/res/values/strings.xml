@@ -1,4 +1,4 @@
-SPINNERQUARRY<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">Android Bus Finder</string>
@@ -7,13 +7,12 @@ SPINNERQUARRY<?xml version="1.0" encoding="utf-8"?>
     <string name="button_send">Enter</string>
     <string name="output_descriptor">Earliest Bus:</string>
     
+    <string name="stop_name">there</string>
+    <string name="stop_time">hi</string>
+    
     <string-array name="locations_array">
     	<item>CHAMPLAIN</item>
     	<item>SPINNER</item>
     	<item>QUARRY</item>
     </string-array>
-    <string name="stop_name">there</string>
-    <string name="stop_time">hi</string>
-    
-    
 </resources>
