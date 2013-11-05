@@ -44,7 +44,7 @@ public class AsyncDataGrab extends AsyncTask<URL, Integer, ArrayList<Stop>>
 				JSONObject jsonObj = new JSONObject(json); 
 				JSONArray jsonLocations = jsonObj.getJSONArray("champlain");
 				
-				for (int i = 0; i < jsonLocations.length()-1; ++i) 
+				for (int i = 0; i < jsonLocations.length(); ++i) 
 				{
 					JSONObject location = jsonLocations.getJSONObject(i); 
 					
