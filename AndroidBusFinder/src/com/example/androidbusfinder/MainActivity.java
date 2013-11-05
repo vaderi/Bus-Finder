@@ -19,9 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
-public class MainActivity extends Activity 
+public class MainActivity extends Activity implements AsyncDataGrab.TaskCompleteListener
 {	
 	ArrayList<Stop> locations = new ArrayList<Stop>();
 	Destination closestDestination;
@@ -35,18 +36,21 @@ public class MainActivity extends Activity
 		public void onClick(View v) 
 		{
 			Log.d(TAG, String.valueOf((char)v.getId()));
+			Destination finalDestination = new Destination("","");
 			
 			try 
 			{
-				closestDestination = new Destination(String.valueOf(R.id.time_input), String.valueOf(R.id.LocationInput));
-				getClosestStop( closestDestination );
+				TextView timeInput = (TextView) findViewById(R.id.time_input);
+				TextView LocationInput = (TextView) findViewById(R.id.autocomplete_location);
+				closestDestination = new Destination(timeInput.getText().toString(), LocationInput.getText().toString());
+				finalDestination = getClosestStop( closestDestination );
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			intent.putExtra("Location", closestDestination.location);
-			intent.putExtra("Time", closestDestination.time);
+			intent.putExtra("Location", finalDestination.location);
+			intent.putExtra("Time", finalDestination.time);
 			startActivity(intent);
 		}
 	};
@@ -106,8 +110,9 @@ public class MainActivity extends Activity
 		}
 	}
 	
+	//TODO This doesn't calculate the correct stop
 	//This calculates the earliest bus going to the destination
-	public void getClosestStop( Destination newDestination ) throws ParseException
+	public Destination getClosestStop( Destination newDestination ) throws ParseException
 	{
 		//These variables let me parse the time strings into variables that I can do math on
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss", Locale.US);
@@ -139,13 +144,18 @@ public class MainActivity extends Activity
 		{
 			newDestination.time = "There is no Bus that will get you there by that time.";
 		}
+		return newDestination;
 	}
-	
-	
 	
 	public void getData() throws ParseException, JSONException, IOException
 	{
 		URL url1 = null;
-		new AsyncDataGrab().execute(url1);
+		new AsyncDataGrab(this).execute(url1);
+	}
+
+	public void onTaskComplete(ArrayList<Stop> locations) 
+	{
+		// TODO Auto-generated method stub
+		this.locations = locations;
 	}
 }

@@ -12,10 +12,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 
 public class AsyncDataGrab extends AsyncTask<URL, Integer, ArrayList<Stop>>
 {
+	private TaskCompleteListener callback;
+	
+	public interface TaskCompleteListener
+    {
+        public void onTaskComplete(ArrayList<Stop> locations);
+    }
+	
+	public AsyncDataGrab(Activity activity)
+	{
+		try
+        {
+            callback = (TaskCompleteListener)activity;
+        }
+        catch(ClassCastException e)
+        {
+            throw new ClassCastException(activity.getClass().getSimpleName()
+                    + " must implement TaskCompleteListener");
+        }
+	}
+	
 	@Override
 	protected ArrayList<Stop> doInBackground(URL... params) 
 	{
@@ -76,8 +97,8 @@ public class AsyncDataGrab extends AsyncTask<URL, Integer, ArrayList<Stop>>
 		return locations;
 	}
 
-	protected void onPostExecute(ArrayList<Stop> photoList)
+	protected void onPostExecute(ArrayList<Stop> locations)
     {
-        
+		callback.onTaskComplete(locations);
     }
 }

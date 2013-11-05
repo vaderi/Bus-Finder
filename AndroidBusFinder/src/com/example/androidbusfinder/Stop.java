@@ -14,9 +14,9 @@ public class Stop
 	String stopTime;
 	String daysActive;
 	SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss", Locale.US);
-	Calendar tempCalanderStopTime;
-	Calendar tempComparisonTime;
-	Calendar extra;
+	Date tempCalanderStopTime;
+	Date tempComparisonTime;
+	Date extra;
 	
 	public Stop( int id, String stop, String time, String days, String[] strings ) throws ParseException
 	{
@@ -27,11 +27,9 @@ public class Stop
 		
 		//convert to Date format use -h\
 		// TODO http://www.tutorialspoint.com/java/java_date_time.htm
-		tempCalanderStopTime = new Calendar();
-		tempComparisonTime = new Calendar();
-		extra = new Calendar();
-		
-		System.out.print(storeID);
+		tempCalanderStopTime = new Date();
+		tempComparisonTime = new Date();
+		extra = new Date();
 		
 		if( daysActive.indexOf(",") != -1 )
 		{
@@ -40,21 +38,21 @@ public class Stop
 		
 		Date tempStopTime = new Date();
 		tempStopTime = sdf.parse("13:00:00");
-		tempComparisonTime.setTime(tempStopTime);
+		tempComparisonTime = sdf.parse("13:00:00");
 		tempStopTime = sdf.parse("01:00:00");
-		extra.setTime(tempStopTime);
+		extra = sdf.parse("01:00:00");
 		tempStopTime = sdf.parse(stopTime);
-		tempCalanderStopTime.setTime(tempStopTime);
+		tempCalanderStopTime = sdf.parse(stopTime);
 		
-		if( tempCalanderStopTime.getTimeInMillis() - tempComparisonTime.getTimeInMillis() > 0 )
+		if( tempCalanderStopTime.getTime() - tempComparisonTime.getTime() > 0 )
 		{
-			tempCalanderStopTime.add(Calendar.HOUR, -adjustment);
+			//tempCalanderStopTime.add(Calendar.HOUR, -adjustment);
 			stopTime = "" + tempStopTime;
 			System.out.printf(stopTime);
 		}
-		else if( tempCalanderStopTime.getTimeInMillis() - extra.getTimeInMillis() < 0 )
+		else if( tempCalanderStopTime.getTime() - extra.getTime() < 0 )
 		{
-			tempCalanderStopTime.add(Calendar.HOUR, adjustment);
+			//tempCalanderStopTime.add(Calendar.HOUR, adjustment);
 			stopTime = "" + tempStopTime;
 			System.out.printf(stopTime);
 		}
